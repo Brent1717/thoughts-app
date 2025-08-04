@@ -5,6 +5,7 @@ const encryptionService = require('./encryptionService');
 const providerSettingsRepository = require('../repositories/providerSettings');
 const authService = require('./authService');
 const ollamaModelRepository = require('../repositories/ollamaModel');
+const centralizedApiService = require('./centralizedApiService');
 
 class ModelStateService extends EventEmitter {
     constructor() {
@@ -267,6 +268,11 @@ class ModelStateService extends EventEmitter {
     async hasValidApiKey() {
         if (this.isLoggedInWithFirebase()) return true;
         
+        // Check centralized API keys first (SaaS mode)
+        const configuredProviders = await centralizedApiService.getAllConfiguredProviders();
+        if (configuredProviders.length > 0) return true;
+        
+        // Fallback to user-provided keys
         const allSettings = await providerSettingsRepository.getAll();
         return allSettings.some(s => s.api_key && s.api_key.trim().length > 0);
     }

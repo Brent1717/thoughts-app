@@ -6,8 +6,8 @@ const { identifyUser } = require('./middleware/auth');
 function createApp(eventBridge) {
     const app = express();
 
-    const webUrl = process.env.pickleglass_WEB_URL || 'http://localhost:3000';
-    console.log(`🔧 Backend CORS configured for: ${webUrl}`);
+    const webUrl = process.env.THOUGHTS_WEB_URL || 'http://localhost:3000';
+    console.log(`🔧 Thoughts Backend CORS configured for: ${webUrl}`);
 
     app.use(cors({
         origin: webUrl,
@@ -17,7 +17,7 @@ function createApp(eventBridge) {
     app.use(express.json());
 
     app.get('/', (req, res) => {
-        res.json({ message: "pickleglass API is running" });
+        res.json({ message: "Thoughts API is running" });
     });
 
     app.use((req, res, next) => {
@@ -43,7 +43,7 @@ function createApp(eventBridge) {
     app.post('/api/desktop/set-user', (req, res) => {
         res.json({
             success: true,
-            message: "Direct IPC communication is now used. This endpoint is deprecated.",
+            message: "Thoughts: Direct IPC communication is now used. This endpoint is deprecated.",
             user: req.body,
             deprecated: true
         });

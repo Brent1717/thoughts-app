@@ -41,7 +41,7 @@ function SessionDetailsContent() {
           const details = await getSessionDetails(sessionId as string);
           setSessionDetails(details);
         } catch (error) {
-          console.error('Failed to load session details:', error);
+          console.error('Failed to load thoughts details:', error);
         } finally {
           setIsLoading(false);
         }
@@ -52,13 +52,13 @@ function SessionDetailsContent() {
 
   const handleDelete = async () => {
     if (!sessionId) return;
-    if (!window.confirm('Are you sure you want to delete this activity? This cannot be undone.')) return;
+    if (!window.confirm('Are you sure you want to delete this Thoughts session? This cannot be undone.')) return;
     setDeleting(true);
     try {
       await deleteSession(sessionId);
       router.push('/activity');
     } catch (error) {
-      alert('Failed to delete activity.');
+      alert('Failed to delete Thoughts session.');
       setDeleting(false);
       console.error(error);
     }
@@ -69,7 +69,7 @@ function SessionDetailsContent() {
       <div className="min-h-screen bg-[#FDFCF9] flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading session details...</p>
+          <p className="mt-4 text-gray-600">Loading thoughts details...</p>
         </div>
       </div>
     );
@@ -79,10 +79,10 @@ function SessionDetailsContent() {
     return (
         <div className="min-h-screen bg-[#FDFCF9] flex items-center justify-center">
             <div className="max-w-4xl mx-auto px-8 py-12 text-center">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-8">Session Not Found</h2>
-                <p className="text-gray-600">The requested session could not be found.</p>
+                <h2 className="text-2xl font-semibold text-gray-900 mb-8">Thoughts Session Not Found</h2>
+                <p className="text-gray-600">The requested Thoughts session could not be found.</p>
                                     <Link href="/activity" className="mt-4 inline-block text-blue-600 hover:text-blue-800">
-                        &larr; Back to Activity
+                        &larr; Back to Thoughts
                     </Link>
             </div>
         </div>
@@ -95,19 +95,19 @@ function SessionDetailsContent() {
     <div className="min-h-screen bg-[#FDFCF9] text-gray-800">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="mb-8">
-                <Link href="/activity" className="text-sm text-gray-500 hover:text-gray-700 flex items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                    Back
-                </Link>
+                                    <Link href="/activity" className="text-sm text-gray-500 hover:text-gray-700 flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Back to Thoughts
+                    </Link>
             </div>
 
             <div className="bg-white p-8 rounded-xl shadow-md border border-gray-100">
                 <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                     <div>
                         <h1 className="text-2xl font-bold text-gray-900 mb-2">
-                            {sessionDetails.session.title || `Conversation on ${new Date(sessionDetails.session.started_at * 1000).toLocaleDateString()}`}
+                            {sessionDetails.session.title || `Thoughts Session on ${new Date(sessionDetails.session.started_at * 1000).toLocaleDateString()}`}
                         </h1>
                         <div className="flex items-center text-sm text-gray-500 space-x-4">
                             <span>{new Date(sessionDetails.session.started_at * 1000).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
@@ -122,7 +122,7 @@ function SessionDetailsContent() {
                         disabled={deleting}
                         className={`px-4 py-2 rounded text-sm font-medium border border-red-200 text-red-700 bg-red-50 hover:bg-red-100 transition-colors ${deleting ? 'opacity-50 cursor-not-allowed' : ''}`}
                     >
-                        {deleting ? 'Deleting...' : 'Delete Activity'}
+                        {deleting ? 'Deleting...' : 'Delete Thoughts Session'}
                     </button>
                 </div>
 
@@ -155,7 +155,7 @@ function SessionDetailsContent() {
                 )}
                 
                 {sessionDetails.transcripts && sessionDetails.transcripts.length > 0 && (
-                    <Section title="Listen: Transcript">
+                    <Section title="Thoughts: Transcript">
                         <div className="space-y-3">
                             {sessionDetails.transcripts.map((item) => (
                                 <p key={item.id} className="text-gray-700">
@@ -168,7 +168,7 @@ function SessionDetailsContent() {
                 )}
                 
                 {askMessages.length > 0 && (
-                    <Section title="Ask: Q&A">
+                    <Section title="Thoughts: Q&A">
                         <div className="space-y-4">
                             {askMessages.map((item) => (
                                 <div key={item.id} className={`p-3 rounded-lg ${item.role === 'user' ? 'bg-gray-100' : 'bg-blue-50'}`}>

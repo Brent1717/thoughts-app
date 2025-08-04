@@ -1,5 +1,5 @@
 {
-  "name": "pickleglass-frontend",
+  "name": "thoughts-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -19,6 +19,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hot-toast": "^2.5.2",
+    "stripe": "^14.7.0",
     "tailwindcss": "^3.3.0"
   },
   "devDependencies": {

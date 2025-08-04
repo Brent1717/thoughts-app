@@ -113,3 +113,14 @@ data/*.db-wal
 out/
 dist/
 build/ 
+env.example
+ARCHITECTURE_MIGRATION.md
+LOCAL_DEVELOPMENT.md
+quick-start.sh
+.gitignore
+setup-api-keys.js
+test-setup.js
+.gitignore
+PRODUCTION_DEPLOYMENT.md
+.gitignore
+.env.local

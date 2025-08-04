@@ -21,7 +21,7 @@ export default function ActivityPage() {
       const fetchedSessions = await getSessions();
       setSessions(fetchedSessions);
     } catch (error) {
-      console.error('Failed to fetch conversations:', error)
+      console.error('Failed to fetch thoughts sessions:', error)
     } finally {
       setIsLoading(false)
     }
@@ -50,13 +50,13 @@ export default function ActivityPage() {
   }
 
   const handleDelete = async (sessionId: string) => {
-    if (!window.confirm('Are you sure you want to delete this activity? This cannot be undone.')) return;
+    if (!window.confirm('Are you sure you want to delete this Thoughts session? This cannot be undone.')) return;
     setDeletingId(sessionId);
     try {
       await deleteSession(sessionId);
       setSessions(sessions => sessions.filter(s => s.id !== sessionId));
     } catch (error) {
-      alert('Failed to delete activity.');
+      alert('Failed to delete Thoughts session.');
       console.error(error);
     } finally {
       setDeletingId(null);
@@ -73,12 +73,12 @@ export default function ActivityPage() {
         </div>
         <div>
           <h2 className="text-2xl font-semibold text-gray-900 mb-8 text-center">
-            Your Past Activity
+            Your Thoughts History
           </h2>
           {isLoading ? (
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600">Loading conversations...</p>
+              <p className="mt-4 text-gray-600">Loading your thoughts...</p>
             </div>
           ) : sessions.length > 0 ? (
             <div className="space-y-4">
@@ -87,7 +87,7 @@ export default function ActivityPage() {
                   <div className="flex justify-between items-start mb-3">
                     <div>
                       <Link href={`/activity/details?sessionId=${session.id}`} className="text-lg font-medium text-gray-900 hover:underline">
-                        {session.title || `Conversation - ${new Date(session.started_at * 1000).toLocaleDateString()}`}
+                        {session.title || `Thoughts Session - ${new Date(session.started_at * 1000).toLocaleDateString()}`}
                       </Link>
                       <div className="text-sm text-gray-500">
                         {new Date(session.started_at * 1000).toLocaleString()}
@@ -110,10 +110,10 @@ export default function ActivityPage() {
           ) : (
             <div className="text-center bg-white rounded-lg p-12">
               <p className="text-gray-500 mb-4">
-                No conversations yet. Start a conversation in the desktop app to see your activity here.
+                No conversations yet. Start a conversation in the Thoughts desktop app to see your activity here.
               </p>
               <div className="text-sm text-gray-400">
-                💡 Tip: Use the desktop app to have AI-powered conversations that will appear here automatically.
+                💡 Tip: Use the Thoughts desktop app to have AI-powered conversations that will appear here automatically.
               </div>
             </div>
           )}

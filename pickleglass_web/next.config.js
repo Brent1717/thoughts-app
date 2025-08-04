@@ -2,7 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  output: 'export',
+  output: 'export', // Static export for Electron app
+  trailingSlash: true, // Required for static export
 
   images: { unoptimized: true },
 }

@@ -48,15 +48,15 @@ let pendingDeepLinkUrl = null;
 function setupProtocolHandling() {
     // Protocol registration - must be done before app is ready
     try {
-        if (!app.isDefaultProtocolClient('pickleglass')) {
-            const success = app.setAsDefaultProtocolClient('pickleglass');
+        if (!app.isDefaultProtocolClient('thoughts')) {
+            const success = app.setAsDefaultProtocolClient('thoughts');
             if (success) {
-                console.log('[Protocol] Successfully set as default protocol client for pickleglass://');
+                console.log('[Protocol] Successfully set as default protocol client for thoughts://');
             } else {
                 console.warn('[Protocol] Failed to set as default protocol client - this may affect deep linking');
             }
         } else {
-            console.log('[Protocol] Already registered as default protocol client for pickleglass://');
+            console.log('[Protocol] Already registered as default protocol client for thoughts://');
         }
     } catch (error) {
         console.error('[Protocol] Error during protocol registration:', error);
@@ -72,7 +72,7 @@ function setupProtocolHandling() {
         
         // Search through all command line arguments for a valid protocol URL
         for (const arg of commandLine) {
-            if (arg && typeof arg === 'string' && arg.startsWith('pickleglass://')) {
+            if (arg && typeof arg === 'string' && arg.startsWith('thoughts://')) {
                 // Clean up the URL by removing problematic characters
                 const cleanUrl = arg.replace(/[\\₩]/g, '');
                 
@@ -607,14 +607,14 @@ async function startWebStack() {
 
   console.log(`🔧 Allocated ports: API=${apiPort}, Frontend=${frontendPort}`);
 
-  process.env.pickleglass_API_PORT = apiPort.toString();
-  process.env.pickleglass_API_URL = `http://localhost:${apiPort}`;
-  process.env.pickleglass_WEB_PORT = frontendPort.toString();
-  process.env.pickleglass_WEB_URL = `http://localhost:${frontendPort}`;
+  process.env.THOUGHTS_API_PORT = apiPort.toString();
+  process.env.THOUGHTS_API_URL = `http://localhost:${apiPort}`;
+  process.env.THOUGHTS_WEB_PORT = frontendPort.toString();
+  process.env.THOUGHTS_WEB_URL = `http://localhost:${frontendPort}`;
 
   console.log(`🌍 Environment variables set:`, {
-    pickleglass_API_URL: process.env.pickleglass_API_URL,
-    pickleglass_WEB_URL: process.env.pickleglass_WEB_URL
+    THOUGHTS_API_URL: process.env.THOUGHTS_API_URL,
+    THOUGHTS_WEB_URL: process.env.THOUGHTS_WEB_URL
   });
 
   const createBackendApp = require('../pickleglass_web/backend_node');
@@ -639,6 +639,7 @@ async function startWebStack() {
   const runtimeConfig = {
     API_URL: `http://localhost:${apiPort}`,
     WEB_URL: `http://localhost:${frontendPort}`,
+    APP_NAME: 'Thoughts',
     timestamp: Date.now()
   };
   
